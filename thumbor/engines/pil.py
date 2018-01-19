@@ -128,10 +128,11 @@ class Engine(BaseEngine):
         resample = self.get_resize_filter()
         self.image = self.image.resize((int(width), int(height)), resample)
 
-        # 1 and P mode images will be much smaller if converted back to
-        # their original mode. So let's do that after resizing. Get $$.
-        if original_mode != self.image.mode:
-            self.image = self.image.convert(original_mode)
+        # (Roger 1/19/2018) Disabling this! Converting 32-bit back to 8 or 1-bit causes banding and other artifacts.
+        # # 1 and P mode images will be much smaller if converted back to
+        # # their original mode. So let's do that after resizing. Get $$.
+        # if original_mode != self.image.mode:
+        #     self.image = self.image.convert(original_mode)
 
     def crop(self, left, top, right, bottom):
         self.image = self.image.crop((
