@@ -120,7 +120,7 @@ class Engine(BaseEngine):
         # Indexed color modes (such as 1 and P) will be forced to use a
         # nearest neighbor resampling algorithm. So we convert them to
         # RGBA mode before resizing to avoid nasty scaling artifacts.
-        original_mode = self.image.mode
+        # original_mode = self.image.mode # Disabling this. See below... (Roger 1/19/18)
         if self.image.mode in ['1', 'P']:
             logger.debug('converting image from 8-bit/1-bit palette to 32-bit RGBA for resize')
             self.image = self.image.convert('RGBA')
@@ -128,7 +128,7 @@ class Engine(BaseEngine):
         resample = self.get_resize_filter()
         self.image = self.image.resize((int(width), int(height)), resample)
 
-        # (Roger 1/19/2018) Disabling this! Converting 32-bit back to 8 or 1-bit causes banding and other artifacts.
+        # (Roger 1/19/18) Disabling this! Converting 32-bit back to 8 or 1-bit causes banding and other artifacts.
         # # 1 and P mode images will be much smaller if converted back to
         # # their original mode. So let's do that after resizing. Get $$.
         # if original_mode != self.image.mode:
